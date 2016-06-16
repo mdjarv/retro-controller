@@ -1,0 +1,33 @@
+# Retro Controller
+
+## Description
+
+Retro Controller is an Arduino-based project for creating a simple wireless gamepad using two Arduinos, two NRF24L01+ and some switches.
+
+The sender sends 2-byte packages containing the keyboard key and character '0' or '1' (ASCII symbol of the number, not the integer) depending on if the button is released or pressed. For example a package of `a1` will indicate that button *A* should be pressed down, and `a0` would release the same button.
+
+When the receiver gets such a package it will trigger a keyboard press or release of the specified button.
+
+### Receiver
+
+The Receiver part is made with an Atmega32u4 (Leonardo) based Arduino, combined with the radio circuit. The reason for using that particular circuit is the HID support, making the receiver act as a normal USB keyboard and trigger keyboard button presses.
+
+The receiver itself does not have any button mappings, it will just take any character in the first byte of the incoming message and press or release depending on if the second byte is a '1' or '0'.
+
+### Sender
+
+The sender can basically be any kind of microcontroller paired with an NRF24L01+ and some switches. I am currently using an Arduino Nano v3 and 8 tactile switches laid out like the NES controller.
+
+## Hardware
+
+My receiver is built using the following parts:
+
+* CJMCU Beetle (Atmega32u4 based)
+* NRF24L01+
+* XC6206P332MR Fixed LDO Voltage Regulator (5v to 3.3v for the NRF chip)
+
+The sender is built with:
+
+* Arduino Nano v3
+* NRF24L01+
+* 8 x Tactile Switches
